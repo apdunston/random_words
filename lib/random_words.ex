@@ -7,16 +7,8 @@ defmodule RandomWords do
   Hello world.
 
   ## Examples
-
-      iex> RandomWords.hello
-      :world
-
   """
   NimbleCSV.define(MyParser, separator: ",", escape: "\"")
-
-  def hello do
-    IO.inspect parts_of_speech()
-  end
 
   def words(number, _opts \\ []) do
     Enum.map(1..number, fn (_) -> word() end)
@@ -64,6 +56,15 @@ defmodule RandomWords do
 
   # Private Functions #
 
+  defp start_server do
+    case RandomWords.WordServer in Process.registered() do
+      false ->
+        RandomWords.WordSupervisor.start_link()
+      true ->
+        nil
+    end
+  end
+
   defp get_random(list) do
     list
     |> Enum.random()
@@ -74,26 +75,12 @@ defmodule RandomWords do
   end
 
   defp data do
-    "data/words.csv"
-    |> File.stream!
-    |> MyParser.parse_stream
-    |> Stream.map(fn [rank, word, part, _frequency, _dispersion, _blank] ->
-      %{rank: String.to_integer(rank), word: word, part: part}
-    end)
-    |> Enum.to_list
-    |> Enum.drop(1)
+    start_server()
+    GenServer.call(RandomWords.WordServer, :words)
   end
 
   defp parts_of_speech do
-    data()
-    |> Enum.reduce(%{}, fn (datum, acc) ->
-      part_name = datum[:part]
-      list = case acc[part_name] do
-        nil -> [datum[:word]]
-        list -> [datum[:word]|list]
-      end
-
-      Map.put(acc, part_name, list)
-    end)
+    start_server()
+    GenServer.call(RandomWords.WordServer, :parts_of_speech)
   end
 end
