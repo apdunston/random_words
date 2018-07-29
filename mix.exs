@@ -1,13 +1,16 @@
 defmodule RandomWords.MixProject do
+  @moduledoc false
   use Mix.Project
 
   def project do
     [
       app: :random_words,
-      version: "0.1.0",
+      version: "1.0.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      description: description(),
+      package: package()
     ]
   end
 
@@ -21,9 +24,20 @@ defmodule RandomWords.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:nimble_csv, "~> 0.3"}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      {:nimble_csv, "~> 0.3"},
+      {:ex_doc, "~> 0.18.0"}
+    ]
+  end
+
+  defp description() do
+    "Provides random words from a list of 5,000 most common American English words. Can break them down into parts-of-speech. Fun for party tricks, example strings, and random names."
+  end
+
+  defp package() do
+    [
+      maintainers: ["Adrian P. Dunston"],
+      licenses: ["MIT", "Word list owned and provided by https://www.wordfrequency.info/."],
+      links: %{"GitHub" => "https://github.com/apdunston/random_words"}
     ]
   end
 end

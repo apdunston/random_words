@@ -1,27 +1,27 @@
 # RandomWords
 
-A random word generator based on the data from http://www.wordfrequency.info.
+Provides random words from a list of 5,000 most common American English words. Can break them down into parts-of-speech. Fun for party tricks, example strings, and random names.
+
+Uses a GenServer to hold the list in-memory without relying on an application wide ETS table.
+
+Based on the data from http://www.wordfrequency.info.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+Package can be installed
 by adding `random_words` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:random_words, "~> 0.1.0"}
+    {:random_words, "~> 1.0.0"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/random_words](https://hexdocs.pm/random_words).
-
 ## Usage
 
-```
+```elixir
 import RandomWords
 
 word()
@@ -36,69 +36,27 @@ verb()
 adverb()
 => greedily
 
-# Specify the size of the word list (top 100 words)
-word(list_size: 100)
-=> a
+# Options-based call
+word([part_of_speech: :noun])
+=> fourth
 
-words(2, list_size: 100)
-=> an the
+# Conjunctive adverbs aren't included in the default list of adverbs.
+# Mix them in with :any_adverb.
+word([part_of_speech: :any_adverb])
+=> that
 
-# top 100 verbs
-verbs(2, list_size: 100)
-=> swim is
-
-word(part_of_speech: :verb)
-=> dance
-
-swear()
-=> damn
-
-# include_swears is false by default
-word(include_swears: true)
-=> funny
-
-word(only_swears: true)
-=> damn
-
-word(include_swears: false, only_swears: true)
-> ERROR; cannot include_swears: false and only_swears: true
-
-word(min_letters: 2, max_letters: 3)
-=> and
-
-# > 6 letters
-word(size: :long)
-=> experience
-
-# 4-6 letters
-word(size: :medium)
-=> funny
-
-# 1-3 letters
-word(size: :short)
-=> run
-
-word(starts_with: "ex")
-=> expect
-
-word(starts_with: "vvvvv")
-> nil
-
-word(ends_with: "an")
-=> ran
-
-word(contains: "fu")
-=> beautiful
+# Numerals, determiners, and adjuncts aren't included in the default list of adjectives
+# Mix them in with :any_adjective
+word([part_of_speech: :any_adjective])
+=> fourth
 ```
 
 ## Removed words
 
-I removed damn, shit, and fucking because they are considered swears, and it was easier to remove them than to account for them. If there had been more of them, I would have considered "swears" as a part of speech.
+I removed damn, shit, and fucking because many people won't want to see them come up at random, and it was easier to remove them than to account for them. If there had been more of them, I would have considered "swears" as a part of speech.
 
 I removed n't because I don't consider it a word at all.
 
-## Todo
+## Contributing
 
-* Remember that not is an adverb and you need to remove n't from the list.
-* Remember to note the swears
-* Create a named process that holds the data in-memory with init/0 and kill/0 functions
+There are a lot more options we could add, but I'm not sure which ones would be important to others. I'd also like to add random sentences and random paragraphs. That would be fun. You are welcome and encouraged to write up fun new ways to access and apply random words. I would love to see your pull requests.
