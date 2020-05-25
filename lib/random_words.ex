@@ -5,7 +5,7 @@ defmodule RandomWords do
   NimbleCSV.define(MyParser, separator: ",", escape: "\"")
 
   def words(number, _opts \\ []) do
-    Enum.map(1..number, fn (_) -> word() end)
+    Enum.map(1..number, fn _ -> word() end)
   end
 
   def word(opts) do
@@ -51,18 +51,20 @@ defmodule RandomWords do
 
   def wordlist, do: data()
 
-  def wordlist([part_of_speech: "any_adjective"]) do
+  def wordlist(part_of_speech: "any_adjective") do
     speech = parts_of_speech()
-    speech["adjective"] ++ speech["determiner"] ++
+
+    speech["adjective"] ++
+      speech["determiner"] ++
       speech["numeral"] ++ speech["adjunct"]
   end
 
-  def wordlist([part_of_speech: "any_adverb"]) do
+  def wordlist(part_of_speech: "any_adverb") do
     speech = parts_of_speech()
     speech["adverb"] ++ speech["conjunctive_adverb"]
   end
 
-  def wordlist([part_of_speech: part]), do: parts_of_speech()[part]
+  def wordlist(part_of_speech: part), do: parts_of_speech()[part]
 
   # Private Functions #
 
@@ -70,6 +72,7 @@ defmodule RandomWords do
     case RandomWords.WordServer in Process.registered() do
       false ->
         RandomWords.WordSupervisor.start_link()
+
       true ->
         nil
     end

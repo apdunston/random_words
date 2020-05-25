@@ -25,24 +25,32 @@ defmodule RandomWords.WordServer do
   # Private Functions #
 
   defp read_from_csv do
-    "data/words.csv"
-    |> File.stream!
-    |> MyParser.parse_stream
+    absolute_dir =
+      Path.absname(__ENV__.file)
+      |> Path.dirname()
+
+    words_file = Path.join([absolute_dir, "..", "data", "words.csv"])
+
+    words_file
+    |> File.stream!()
+    |> MyParser.parse_stream()
     |> Stream.map(fn [rank, word, part, _frequency, _dispersion, _blank] ->
       %{rank: String.to_integer(rank), word: word, part: part}
     end)
-    |> Enum.to_list
+    |> Enum.to_list()
     |> Enum.drop(1)
   end
 
   defp parts_of_speech(words) do
     words
-    |> Enum.reduce(%{}, fn (datum, acc) ->
+    |> Enum.reduce(%{}, fn datum, acc ->
       part_name = datum[:part]
-      list = case acc[part_name] do
-        nil -> [datum[:word]]
-        list -> [datum[:word]|list]
-      end
+
+      list =
+        case acc[part_name] do
+          nil -> [datum[:word]]
+          list -> [datum[:word] | list]
+        end
 
       Map.put(acc, part_name, list)
     end)

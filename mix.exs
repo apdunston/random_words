@@ -5,8 +5,8 @@ defmodule RandomWords.MixProject do
   def project do
     [
       app: :random_words,
-      version: "1.0.0",
-      elixir: "~> 1.6",
+      version: "1.0.1",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
@@ -24,8 +24,8 @@ defmodule RandomWords.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:nimble_csv, "~> 0.3"},
-      {:ex_doc, "~> 0.18.0"}
+      {:nimble_csv, "~> 0.7"},
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false}
     ]
   end
 

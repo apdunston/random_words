@@ -32,7 +32,7 @@ defmodule RandomWordsTest do
 
   defp measure(function) do
     function
-    |> :timer.tc
+    |> :timer.tc()
     |> elem(0)
     |> Kernel./(1_000_000)
   end
@@ -51,6 +51,7 @@ defmodule RandomWordsTest do
       |> Enum.find(fn line ->
         String.contains?(line, ",#{part},")
       end)
+
     assert(found != nil, "#{found} did not contain #{part}.")
   end
 end
