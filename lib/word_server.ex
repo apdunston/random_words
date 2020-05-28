@@ -25,11 +25,7 @@ defmodule RandomWords.WordServer do
   # Private Functions #
 
   defp read_from_csv do
-    absolute_dir =
-      Path.absname(__ENV__.file)
-      |> Path.dirname()
-
-    words_file = Path.join([absolute_dir, "..", "data", "words.csv"])
+    words_file = Path.join(:code.priv_dir(:random_words), "words.csv")
 
     words_file
     |> File.stream!()
