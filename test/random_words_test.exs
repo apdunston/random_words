@@ -44,7 +44,7 @@ defmodule RandomWordsTest do
 
   defp verify_part_of_speech(word, part) do
     found =
-      File.stream!("./data/words.csv")
+      File.stream!("./priv/words.csv")
       |> Enum.filter(fn line ->
         String.contains?(line, ",#{word},")
       end)

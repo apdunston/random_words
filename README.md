@@ -14,7 +14,7 @@ by adding `random_words` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:random_words, "~> 1.0.0"}
+    {:random_words, "~> 1.0.2"}
   ]
 end
 ```
