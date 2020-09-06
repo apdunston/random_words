@@ -25,7 +25,8 @@ defmodule RandomWords.MixProject do
   defp deps do
     [
       {:nimble_csv, "~> 0.7"},
-      {:ex_doc, "~> 0.22", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 
