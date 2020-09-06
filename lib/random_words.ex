@@ -267,7 +267,7 @@ defmodule RandomWords do
     GenServer.call(RandomWords.WordServer, :words)
   end
 
-  @spec parts_of_speech() :: %{required(String.t()) => [String.t()]}
+  @spec parts_of_speech() :: %{required(part_of_speech()) => [String.t()]}
   defp parts_of_speech do
     start_server()
     GenServer.call(RandomWords.WordServer, :parts_of_speech)
