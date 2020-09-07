@@ -1,6 +1,7 @@
 defmodule RandomWordsTest do
   use ExUnit.Case
   doctest RandomWords
+  import TestHelper
 
   test "give me a word" do
     word = RandomWords.word()
@@ -14,17 +15,16 @@ defmodule RandomWordsTest do
     Enum.each(words, &verify_word/1)
   end
 
-  test "give me a verb" do
-    verb = RandomWords.verb()
-    verify_word(verb)
-    verify_part_of_speech(verb, "verb")
-  end
-
-  test "give me a noun" do
-    noun = RandomWords.noun()
-    verify_word(noun)
-    verify_part_of_speech(noun, "noun")
-  end
+  test_pos_helper(:adjective)
+  test_pos_helper(:adverb)
+  test_pos_helper(:conjunctive_adverb)
+  test_pos_helper(:determiner)
+  test_pos_helper(:interjection)
+  test_pos_helper(:noun)
+  test_pos_helper(:numeral)
+  test_pos_helper(:preposition)
+  test_pos_helper(:pronoun)
+  test_pos_helper(:verb)
 
   test "200 words a second" do
     time_200_via_word = measure(fn -> Enum.each(0..200, fn _ -> RandomWords.word() end) end)
@@ -35,30 +35,5 @@ defmodule RandomWordsTest do
     IO.puts("200 words via words() in seconds: #{time_200_via_words}")
     assert time_200_via_words < 1
     assert time_200_via_words < time_200_via_word
-  end
-
-  defp measure(function) do
-    function
-    |> :timer.tc()
-    |> elem(0)
-    |> Kernel./(1_000_000)
-  end
-
-  defp verify_word(word) do
-    assert is_bitstring(word)
-    assert word != ""
-  end
-
-  defp verify_part_of_speech(word, part) do
-    found =
-      File.stream!("./priv/words.csv")
-      |> Enum.filter(fn line ->
-        String.contains?(line, ",#{word},")
-      end)
-      |> Enum.find(fn line ->
-        String.contains?(line, ",#{part},")
-      end)
-
-    assert(found != nil, "#{found} did not contain #{part}.")
   end
 end
