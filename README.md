@@ -22,40 +22,44 @@ end
 ## Usage
 
 ```elixir
-import RandomWords
+iex(1)> import RandomWords
+RandomWords
 
-word()
-=> hilarious
+iex(2)> :rand.seed(:exsplus, {101, 102, 103})
+# Omitted
 
-words(2)
-=> beefcake fancy
+iex(3)> word()
+"fist"
 
-verb()
-=> run
+iex(4)> words(2)
+["perform", "mix"]
 
-adverb()
-=> greedily
+iex(5)> verb()
+"overlook"
+
+iex(6)> adverb()
+"always"
 
 # Options-based call
-word([part_of_speech: :noun])
-=> fourth
+iex(7)> word([part_of_speech: :noun])
+"people"
 
 # Conjunctive adverbs aren't included in the default list of adverbs.
 # Mix them in with :any_adverb.
-word([part_of_speech: :any_adverb])
-=> that
+iex(8)> word([part_of_speech: :any_adverb])
+"like"
 
 # Numerals, determiners, and adjuncts aren't included in the default list of adjectives
 # Mix them in with :any_adjective
-word([part_of_speech: :any_adjective])
-=> fourth
+iex(9)> word([part_of_speech: :any_adjective])
+"French"
 ```
 
 ## Removed words
 
-I removed damn, shit, and fucking because many people won't want to see them come up at random, and it was easier to remove them than to account for them. If there had been more of them, I would have considered "swears" as a part of speech.
+I removed "damn", "shit", and "fucking" because many people won't want to see them come up at random, and it was easier to remove them than to account for them. If there had been more of them, I would have considered "swears" as a part of speech.
 
-I removed n't because I don't consider it a word at all.
+I removed "n't" because I don't consider it a word at all.
 
 ## Contributing
 
