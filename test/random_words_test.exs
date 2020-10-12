@@ -27,7 +27,14 @@ defmodule RandomWordsTest do
   end
 
   test "200 words a second" do
-    assert measure(fn -> Enum.each(0..200, fn _ -> RandomWords.word() end) end) < 1
+    time_200_via_word = measure(fn -> Enum.each(0..200, fn _ -> RandomWords.word() end) end)
+    IO.puts("200 words via word() in seconds: #{time_200_via_word}")
+    assert time_200_via_word < 1
+
+    time_200_via_words = measure(fn -> RandomWords.words(200) end)
+    IO.puts("200 words via words() in seconds: #{time_200_via_words}")
+    assert time_200_via_words < 1
+    assert time_200_via_words < time_200_via_word
   end
 
   defp measure(function) do

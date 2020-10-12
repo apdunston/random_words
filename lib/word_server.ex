@@ -31,24 +31,15 @@ defmodule RandomWords.WordServer do
     |> File.stream!()
     |> MyParser.parse_stream()
     |> Stream.map(fn [rank, word, part, _frequency, _dispersion, _blank] ->
+      part = part |> String.replace(" ", "_") |> String.to_atom()
       %{rank: String.to_integer(rank), word: word, part: part}
     end)
+    |> Stream.drop(1)
     |> Enum.to_list()
-    |> Enum.drop(1)
   end
 
+  @spec parts_of_speech(any()) :: %{required(String.t()) => [String.t()]}
   defp parts_of_speech(words) do
-    words
-    |> Enum.reduce(%{}, fn datum, acc ->
-      part_name = datum[:part]
-
-      list =
-        case acc[part_name] do
-          nil -> [datum[:word]]
-          list -> [datum[:word] | list]
-        end
-
-      Map.put(acc, part_name, list)
-    end)
+    Enum.group_by(words, &Map.fetch!(&1, :part), &Map.fetch!(&1, :word))
   end
 end
