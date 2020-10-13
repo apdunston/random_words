@@ -15,6 +15,7 @@ defmodule RandomWordsTest do
     Enum.each(words, &verify_word/1)
   end
 
+  # See `TestHelper` module for the definitions
   test_pos_helper(:adjective)
   test_pos_helper(:adverb)
   test_pos_helper(:conjunctive_adverb)
