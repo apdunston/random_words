@@ -64,3 +64,5 @@ I removed "n't" because I don't consider it a word at all.
 ## Contributing
 
 There are a lot more options we could add, but I'm not sure which ones would be important to others. I'd also like to add random sentences and random paragraphs. That would be fun. You are welcome and encouraged to write up fun new ways to access and apply random words. I would love to see your pull requests.
+
+Many thanks to  @bfcarpio Brendan Carpio for his contributions!
