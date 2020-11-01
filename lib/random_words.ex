@@ -1,9 +1,10 @@
 defmodule RandomWords do
   @moduledoc """
-  Provide a random word from a list of 5,000 most common American English words.
+  Provide a random word from a list of 5,000 most common American English words. Provide options for
+  multiple words at once and words of a particular part-of-speech.
 
-
-  Word list owned and provided by https://www.wordfrequency.info/. Their terms are that this list cannot be reproduced without crediting them by URL.
+  Word list owned and provided by https://www.wordfrequency.info/. Their terms are that this list
+  cannot be reproduced without crediting them by URL.
   """
   NimbleCSV.define(MyParser, separator: ",", escape: "\"")
 
@@ -36,9 +37,9 @@ defmodule RandomWords do
   ## Examples
 
       # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
+      iex> :rand.seed(:exs1024, {123, 123534, 345345})
       iex> RandomWords.words(3)
-      ["green", "scandal", "resistance"]
+      ["gene", "peasant", "candidate"]
   """
   @spec words(non_neg_integer(), opts()) :: list(String.t())
   def words(count, opts \\ [part_of_speech: :any]) do
@@ -51,168 +52,74 @@ defmodule RandomWords do
   ## Examples
 
       # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
+      iex> :rand.seed(:exs1024, {123, 123534, 345345})
       iex> RandomWords.word()
-      "straight"
+      "include"
   """
   @spec word(opts) :: String.t()
   def word(opts \\ [part_of_speech: :any]), do: wordlist(opts) |> Enum.random()
 
   @doc """
-  Excludes numerals, determiners, and adjuncts. (See any_adjective/0)
-
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.adjective()
-      "troubled"
+  Returns a word of type adjective. Note: this excludes determiners, numerals, and adjuncts.
+  While technically part of the adjective family, they are specific cases. See wordlist/1
+  for `any_adjective`.
   """
   @spec adjective() :: String.t()
   def adjective, do: word(part_of_speech: :adjective)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.adjunct()
-      "a"
-  """
+  @doc "Returns a word of type adjunct"
   @spec adjunct() :: String.t()
   def adjunct, do: word(part_of_speech: :adjunct)
 
   @doc """
-  Excludes conjunctive adverbs. (See any_adverb/0)
-
-  ## Examples
-
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.adverb()
-      "briefly"
+  Returns a word of type adverb. Note: this excludes conjunctive_adverbs.
+  While technically part of the adverb family, they are specific cases. See wordlist/1
+  for `any_adverb`.
   """
   @spec adverb() :: String.t()
   def adverb, do: word(part_of_speech: :adverb)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.conjunctive_adverb()
-      "now"
-  """
+  @doc "Returns a word of type conjunctive_adverb"
   @spec conjunctive_adverb() :: String.t()
   def conjunctive_adverb, do: word(part_of_speech: :conjunctive_adverb)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.determiner()
-      "enough"
-  """
+  @doc "Returns a word of type determiner"
   @spec determiner() :: String.t()
   def determiner, do: word(part_of_speech: :determiner)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.interjection()
-      "huh"
-  """
+  @doc "Returns a word of type interjection"
   @spec interjection() :: String.t()
   def interjection, do: word(part_of_speech: :interjection)
 
-  @doc """
-  ## Examples
-
-      
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.noun()
-      "fraud"
-  """
+  @doc "Returns a word of type noun"
   @spec noun() :: String.t()
   def noun, do: word(part_of_speech: :noun)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.numeral()
-      "first"
-  """
+  @doc "Returns a word of type numeral"
   @spec numeral() :: String.t()
   def numeral, do: word(part_of_speech: :numeral)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.preposition()
-      "under"
-  """
+  @doc "Returns a word of type preposition"
   @spec preposition() :: String.t()
   def preposition, do: word(part_of_speech: :preposition)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.pronoun()
-      "anybody"
-  """
+  @doc "Returns a word of type pronoun"
   @spec pronoun() :: String.t()
   def pronoun, do: word(part_of_speech: :pronoun)
 
-  @doc """
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.verb()
-      "depict"
-  """
+  @doc "Returns a word of type verb"
   @spec verb() :: String.t()
   def verb, do: word(part_of_speech: :verb)
 
   @doc """
-  Includes numerals, determiners, and adjuncts.
-
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.any_adjective()
-      "special"
-  """
-  @spec any_adjective() :: String.t()
-  def any_adjective, do: word(part_of_speech: :any_adjective)
-
-  @doc """
-  Includes conjunctive adverbs.
-
-  ## Examples
-
-      # Seed random generation for examples
-      iex> :rand.seed(:exsss, {101, 102, 103})
-      iex> RandomWords.any_adverb()
-      "freely"
-  """
-  @spec any_adverb() :: String.t()
-  def any_adverb, do: word(part_of_speech: :any_adverb)
-
-  @doc """
   Returns all the words available in any / the specified category.
+
+  Note that the `:any_adjective` part-of-speech option includes the
+  determiners, numerals, and adjuncts that are part of the broader
+  adjective family.
+
+  Note that the `:any_adverb` part-of-speech option includes the
+  conjunctive adverbs that are part of the broader adverb family.
 
   ## Examples
 
@@ -229,7 +136,7 @@ defmodule RandomWords do
   end
 
   def wordlist(part_of_speech: :any_adjective) do
-    words_for_parts_of_speech([:adjective, :determiner, :numberal, :adjunct])
+    words_for_parts_of_speech([:adjective, :determiner, :numeral, :adjunct])
   end
 
   def wordlist(part_of_speech: :any_adverb) do

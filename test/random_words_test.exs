@@ -14,25 +14,25 @@ defmodule RandomWordsTest do
     Enum.each(words, &verify_word/1)
   end
 
-  test "give me a verb" do
-    verb = RandomWords.verb()
-    verify_word(verb)
-    verify_part_of_speech(verb, "verb")
-  end
+  test "verify parts of speech" do
+    parts_of_speech = ~w(adjective adjunct adverb conjunctive_adverb determiner
+      interjection noun numeral preposition pronoun verb)a
 
-  test "give me a noun" do
-    noun = RandomWords.noun()
-    verify_word(noun)
-    verify_part_of_speech(noun, "noun")
+    for part <- parts_of_speech do
+      word = apply(RandomWords, part, [])
+      verify_word(word)
+      part = Atom.to_string(part) |> String.replace("_", " ")
+      verify_part_of_speech(word, part)
+    end
   end
 
   test "200 words a second" do
     time_200_via_word = measure(fn -> Enum.each(0..200, fn _ -> RandomWords.word() end) end)
-    IO.puts("200 words via word() in seconds: #{time_200_via_word}")
+    # IO.puts("200 words via word() in seconds: #{time_200_via_word}")
     assert time_200_via_word < 1
 
     time_200_via_words = measure(fn -> RandomWords.words(200) end)
-    IO.puts("200 words via words() in seconds: #{time_200_via_words}")
+    # IO.puts("200 words via words() in seconds: #{time_200_via_words}")
     assert time_200_via_words < 1
     assert time_200_via_words < time_200_via_word
   end
