@@ -34,12 +34,15 @@ defmodule RandomWords do
         ]
 
   @doc """
+  Returns multiple random words.
+
   ## Examples
 
       # Seed random generation for examples
       iex> :rand.seed(:exs1024, {123, 123534, 345345})
       iex> RandomWords.words(3)
       ["gene", "peasant", "candidate"]
+
   """
   @spec words(non_neg_integer(), opts()) :: list(String.t())
   def words(count, opts \\ [part_of_speech: :any]) do
@@ -49,12 +52,15 @@ defmodule RandomWords do
   end
 
   @doc """
+  Returns single random word.
+
   ## Examples
 
       # Seed random generation for examples
       iex> :rand.seed(:exs1024, {123, 123534, 345345})
       iex> RandomWords.word()
       "include"
+
   """
   @spec word(opts) :: String.t()
   def word(opts \\ [part_of_speech: :any]), do: wordlist(opts) |> Enum.random()
@@ -125,8 +131,10 @@ defmodule RandomWords do
 
       iex> RandomWords.wordlist() |> length()
       4995
+
       iex> RandomWords.wordlist(part_of_speech: :verb) |> length()
       1001
+
   """
   @spec wordlist(opts) :: list(String.t())
   def wordlist(opts \\ [part_of_speech: :any])
