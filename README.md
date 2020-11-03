@@ -1,5 +1,11 @@
 # RandomWords
 
+[![Module Version](https://img.shields.io/hexpm/v/random_words.svg)](https://hex.pm/packages/random_words)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/random_words/)
+[![Total Download](https://img.shields.io/hexpm/dt/random_words.svg)](https://hex.pm/packages/random_words)
+[![License](https://img.shields.io/hexpm/l/random_words.svg)](https://hex.pm/packages/random_words)
+[![Last Updated](https://img.shields.io/github/last-commit/apdunston/random_words.svg)](https://github.com/apdunston/random_words/commits/master)
+
 Provides random words from a list of 5,000 most common American English words. Can break them down into parts-of-speech. Fun for party tricks, example strings, and random names.
 
 Uses a GenServer to hold the list in-memory without relying on an application wide ETS table.
@@ -8,8 +14,7 @@ Based on the data from http://www.wordfrequency.info.
 
 ## Installation
 
-Package can be installed
-by adding `random_words` to your list of dependencies in `mix.exs`:
+Add `random_words` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -66,3 +71,10 @@ I removed "n't" because I don't consider it a word at all.
 There are a lot more options we could add, but I'm not sure which ones would be important to others. I'd also like to add random sentences and random paragraphs. That would be fun. You are welcome and encouraged to write up fun new ways to access and apply random words. I would love to see your pull requests.
 
 Many thanks to  @bfcarpio Brendan Carpio for his contributions!
+
+## License
+
+Word list owned and provided by https://www.wordfrequency.info/. Their terms
+are that this list cannot be reproduced without crediting them by URL.
+
+All other material Copyright 2018 - 2020, Adrian P. Dunston provided under MIT license.
